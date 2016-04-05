@@ -38,6 +38,10 @@ function createServer(logger) {
         log: logger
     }));
 
+    if(logger) server.on('uncaughtException',function(request, response, route, error){
+       logger.error(error);
+    })
+
     //get the list of all routes files
     var files = glob.sync("*-routes.js", {
         matchBase: true,
@@ -46,8 +50,8 @@ function createServer(logger) {
 
     //attach all routes to server
     files.forEach(function(file){
-      require('./modules/'+file).applyRoutes(server, path.dirname(file));
+      require('./modules/'+file).applyRoutes(server, "/"+path.dirname(file));
     });
-    
+
     return server;
 }
