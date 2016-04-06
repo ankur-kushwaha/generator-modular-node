@@ -27,7 +27,7 @@ function copyTemplateToDestBase(templatePath, destPath, context) {
   }
 }
 
-module.exports = yeoman.generators.Base.extend({
+module.exports = yeoman.Base.extend({
   prompting: function() {
     var done = this.async();
 
@@ -36,7 +36,7 @@ module.exports = yeoman.generators.Base.extend({
 
     // Have Yeoman greet the user.
     this.log(yosay(
-      'Welcome to the incredible ' + chalk.red('RESTify server') + ' generator!'
+      'Welcome to the incredible ' + chalk.red('Modular Node') + ' generator!'
     ));
 
     var prompts = [{

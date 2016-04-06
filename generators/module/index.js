@@ -33,7 +33,15 @@ function getModules(){
   return glob.sync('modules/**/');
 }
 
-module.exports = yeoman.generators.Base.extend({
+module.exports = yeoman.Base.extend({
+  constructor: function () {
+      yeoman.Base.apply(this, arguments);
+
+      // This makes `appname` a required argument.
+      this.argument('module', { type: String, required: true });
+      // And you can then access it later on this way; e.g. CamelCased
+      this.module = _s.camelize(this.module);
+    },
   prompting: function() {
     var done = this.async();
 
@@ -42,16 +50,10 @@ module.exports = yeoman.generators.Base.extend({
 
     // Have Yeoman greet the user.
     this.log(yosay(
-      'Welcome to the incredible ' + chalk.red('RESTify server') + ' generator!'
+      'Welcome to the incredible ' + chalk.red('Module Node') + ' generator!'
     ));
 
     var prompts = [{
-      name: 'module',
-      message: 'What is module name?',
-      validate: function validate(input) {
-        return !!input;
-      }
-    },{
       type: 'list',
       name: 'parentModule',
       message: 'Specify the parent module name',
@@ -69,12 +71,12 @@ module.exports = yeoman.generators.Base.extend({
     app: function() {
       var copyTemplateToDest = copyTemplateToDestBase.bind(this);
       var parentModule=this.props.parentModule
-      var module=this.props.module.toLowerCase();
-      copyTemplateToDest('modules/Book/book-routes.js', parentModule+module+"/"+module+"-routes.js",{
-        module:module
+      var moduleName=this.module;
+      copyTemplateToDest('modules/Book/book-routes.js', parentModule+moduleName+"/"+moduleName+"-routes.js",{
+        module:moduleName
       });
-      copyTemplateToDest('modules/Book/book-service.js', parentModule+module+"/"+module.toLowerCase()+"-service.js",{
-        module:module
+      copyTemplateToDest('modules/Book/book-service.js', parentModule+moduleName+"/"+moduleName+"-service.js",{
+        module:moduleName
       });
     },
 
