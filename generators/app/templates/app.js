@@ -42,6 +42,8 @@ function createServer(logger) {
        logger.error(error);
     })
 
+    var common=require('./modules/common')();
+
     //get the list of all routes files
     var files = glob.sync("*-routes.js", {
         matchBase: true,
@@ -50,7 +52,7 @@ function createServer(logger) {
 
     //attach all routes to server
     files.forEach(function(file){
-      require('./modules/'+file).applyRoutes(server, "/"+path.dirname(file));
+      require('./modules/'+file)(common).applyRoutes(server, "/"+path.dirname(file));
     });
 
     return server;
