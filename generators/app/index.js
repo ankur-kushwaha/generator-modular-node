@@ -63,8 +63,8 @@ module.exports = yeoman.Base.extend({
       copyIdenticalPaths('config/default.json5');
       copyIdenticalPaths('config/local.json5.example');
 
-      copyIdenticalPaths('modules/Book/book-routes.js');
-      copyIdenticalPaths('modules/Book/book-service.js');
+      copyIdenticalPaths('modules/common/common-service.js');
+      copyIdenticalPaths('modules/common/index.js');
 
       copyIdenticalPaths('test/server.js');
 
